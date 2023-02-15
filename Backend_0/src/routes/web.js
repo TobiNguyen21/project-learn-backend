@@ -1,18 +1,11 @@
-const { Router } = require('express');
 const express = require('express');
-
 const router = express.Router();
+const { getHomepage, getABC, getTobi } = require('../controllers/homeController');
 
-router.get('/', (req, res) => {
-    res.send('Hello World Tobi with nodemon!')
-})
+router.get('/', getHomepage)
 
-router.get('/abc', (req, res) => {
-    res.send('check abc')
-})
+router.get('/abc', getABC)
 
-router.get('/tobi', (req, res) => {
-    res.render('sample.ejs')
-})
+router.get('/tobi', getTobi)
 
 module.exports = router;
