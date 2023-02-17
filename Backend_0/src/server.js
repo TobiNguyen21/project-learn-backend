@@ -13,6 +13,8 @@ const configViewEngine = require('./config/viewEngine')
 // Require the custom module that exports the web application routes
 const webRoutes = require('./routes/web')
 
+const connection = require('./config/database');
+
 // Create an Express application instance
 const app = express();
 
@@ -28,7 +30,13 @@ const hostname = process.env.HOST_NAME;
 configViewEngine(app)
 
 // Mount the webRoutes module at the /test path
-app.use('/test', webRoutes)
+app.use('/', webRoutes)
+
+//test connection
+
+
+// simple query
+
 
 // Start the Express application and listen on the specified port and hostname
 app.listen(port, hostname, () => {
