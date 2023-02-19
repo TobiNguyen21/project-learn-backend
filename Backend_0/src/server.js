@@ -26,6 +26,10 @@ const port = process.env.PORT || 8888;
 // Get the hostname from the HOST_NAME environment variable
 const hostname = process.env.HOST_NAME;
 
+//config template engine
+app.use(express.json()) //for json
+app.use(express.urlencoded({ extended: true })) //for form data
+
 // Configure the view engine for the Express application
 configViewEngine(app)
 
