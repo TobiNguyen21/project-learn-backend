@@ -27,13 +27,14 @@ const port = process.env.PORT || 8888;
 const hostname = process.env.HOST_NAME;
 
 //config template engine
+//Purpose: to enable rendering of dynamic content & data to be sent to the client-side
 app.use(express.json()) //for json
 app.use(express.urlencoded({ extended: true })) //for form data
 
 // Configure the view engine for the Express application
 configViewEngine(app)
 
-// Mount the webRoutes module at the /test path
+// Mount the webRoutes module at the / path
 app.use('/', webRoutes)
 
 //test connection
