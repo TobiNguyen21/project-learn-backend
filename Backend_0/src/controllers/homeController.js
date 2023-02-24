@@ -1,5 +1,5 @@
 const connection = require('../config/database');
-const { getAllUsers } = require('../services/CRUDSevice');
+const { getAllUsers, getUserById } = require('../services/CRUDSevice');
 
 const getHomepage = async (req, res) => {
     //process data
@@ -44,8 +44,18 @@ const getCreatePage = (req, res) => {
     res.render('create.ejs')
 }
 
-const getUpdatePage = (req, res) => {
-    res.render('edit.ejs')
+
+const getUpdatePage = async (req, res) => {
+
+    // Route path: /user/:userId(\d+)
+    // Request URL: http://localhost:3000/user/42
+    // req.params: {"userId": "42"} 
+    const userId = req.params.id;
+    //console.log(req.params, '-', UserId);
+
+    let user = await getUserById(userId);
+
+    res.render('edit.ejs', { userEdit: user }); // userEdit <-- user
 }
 module.exports = {
     getHomepage,
