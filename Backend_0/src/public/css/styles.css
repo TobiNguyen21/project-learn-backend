@@ -44,3 +44,7 @@
  .input-group {
      padding: 10px;
  }
+
+ .d-non {
+     display: none;
+ }

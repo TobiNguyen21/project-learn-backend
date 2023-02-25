@@ -1,5 +1,5 @@
 const connection = require('../config/database');
-const { getAllUsers, getUserById } = require('../services/CRUDSevice');
+const { getAllUsers, createUser, getUserById, updateUserById } = require('../services/CRUDSevice');
 
 const getHomepage = async (req, res) => {
     //process data
@@ -16,19 +16,20 @@ const getTobi = (req, res) => {
     res.render('sample.ejs')
 }
 const postCreateUser = async (req, res) => {
-    console.log('>>>req.body: ', req.body)
+    //console.log('>>>req.body: ', req.body)
     let email = req.body.email;
     let name = req.body.myName;
     let city = req.body.city;
     // let {email, name, city} = req.body;
 
-    console.log(">>> email :", email, " name : ", name, " city : ", city);
+    //console.log(">>> email :", email, " name : ", name, " city : ", city);
 
-    let [results, fields] = await connection.query(
-        `INSERT INTO Users (email ,name ,city) VALUES (?,?,?)`, [email, name, city]
-    );
+    await createUser(email, name, city);
+    res.send('Create success');
+    //console.log(">>check rows: ", results);
+    //call model 
 
-    console.log('>>check results: ', results);
+    //console.log('>>check results: ', results);
 
     // connection.query('select * from Users u',
     //     function (err, results, fields) {
@@ -50,12 +51,27 @@ const getUpdatePage = async (req, res) => {
     // Route path: /user/:userId(\d+)
     // Request URL: http://localhost:3000/user/42
     // req.params: {"userId": "42"} 
-    const userId = req.params.id;
-    //console.log(req.params, '-', UserId);
+    let userId = req.params.id;
+    //console.log(req.params, '-', userId);
 
     let user = await getUserById(userId);
 
     res.render('edit.ejs', { userEdit: user }); // userEdit <-- user
+}
+
+const postUpdateUser = async (req, res) => {
+    //console.log('>>>req.body: ', req.body)
+    let email = req.body.email;
+    let name = req.body.myName;
+    let city = req.body.city;
+    let userId = req.body.userId;
+
+    console.log(">>> email :", email, " name : ", name, " city : ", city);
+
+    await updateUserById(email, name, city, userId);
+
+    res.send("Update success");
+
 }
 module.exports = {
     getHomepage,
@@ -63,5 +79,6 @@ module.exports = {
     getTobi,
     postCreateUser,
     getCreatePage,
-    getUpdatePage
+    getUpdatePage,
+    postUpdateUser
 }
