@@ -70,8 +70,8 @@ const postUpdateUser = async (req, res) => {
 
     await updateUserById(email, name, city, userId);
 
-    res.send("Update success");
-
+    //res.send("Update success");
+    res.redirect('/');
 }
 module.exports = {
     getHomepage,
