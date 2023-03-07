@@ -45,7 +45,7 @@
         <div class="title">List Users</div>
         <table>
             <tr>
-                <th>ID</th>
+                <th class="d-non">ID</th>
                 <th>Email</th>
                 <th>Name</th>
                 <th>City</th>
@@ -75,7 +75,7 @@
 
             <% listUsers.forEach(function(user) { %>
                 <tr>
-                    <td>
+                    <td class="d-non">
                         <%= user.id %>
                     </td>
                     <td>
@@ -88,8 +88,13 @@
                         <%= user.city %>
                     </td>
                     <td>
-                        <a href="/update/<%= user.id %>">Edit</a>
-                        <button>Delete</button>
+                        <!-- <a href="/update/<%= user.id %>">Edit</a> -->
+                        <form action="/update/<%= user.id %>" method="get">
+                            <button>Edit</button>
+                        </form>
+                        <form action="/delete-user/<%= user.id %>" method="post">
+                            <button>Delete</button>
+                        </form>
                     </td>
                 </tr>
                 <% }) %>

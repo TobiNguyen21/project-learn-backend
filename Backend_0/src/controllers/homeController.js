@@ -1,5 +1,5 @@
 const connection = require('../config/database');
-const { getAllUsers, createUser, getUserById, updateUserById } = require('../services/CRUDSevice');
+const { getAllUsers, createUser, getUserById, updateUserById, deleteUserById } = require('../services/CRUDSevice');
 
 const getHomepage = async (req, res) => {
     //process data
@@ -9,12 +9,15 @@ const getHomepage = async (req, res) => {
 
     return res.render('home.ejs', { listUsers: results })
 }
+
 const getABC = (req, res) => {
     res.send('check ABC')
 }
+
 const getTobi = (req, res) => {
     res.render('sample.ejs')
 }
+
 const postCreateUser = async (req, res) => {
     //console.log('>>>req.body: ', req.body)
     let email = req.body.email;
@@ -25,7 +28,7 @@ const postCreateUser = async (req, res) => {
     //console.log(">>> email :", email, " name : ", name, " city : ", city);
 
     await createUser(email, name, city);
-    res.send('Create success');
+    res.redirect('/');
     //console.log(">>check rows: ", results);
     //call model 
 
@@ -73,6 +76,24 @@ const postUpdateUser = async (req, res) => {
     //res.send("Update success");
     res.redirect('/');
 }
+
+const postDeleteUser = async (req, res) => {
+    let userId = req.params.id;
+
+    let user = await getUserById(userId);
+
+    res.render('delete.ejs', { userEdit: user }); // userEdit <-- user
+}
+
+const postHandleRemoveUser = async (req, res) => {
+    let userid = req.body.userId;
+
+    await deleteUserById(userid);
+
+    res.redirect('/');
+
+}
+
 module.exports = {
     getHomepage,
     getABC,
@@ -80,5 +101,7 @@ module.exports = {
     postCreateUser,
     getCreatePage,
     getUpdatePage,
-    postUpdateUser
+    postUpdateUser,
+    postDeleteUser,
+    postHandleRemoveUser
 }
