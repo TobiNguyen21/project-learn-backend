@@ -38,7 +38,7 @@ configViewEngine(app)
 app.use('/', webRoutes)
 
 //test connection
-
+connection();
 
 // simple query
 
