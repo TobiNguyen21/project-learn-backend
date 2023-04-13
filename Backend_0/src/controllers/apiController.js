@@ -33,14 +33,26 @@ const putUpdateUserAPI = async (req, res) => {
     let userId = req.body.userId;
 
     let user = await User.updateOne({ _id: userId }, { email: email, name: name, city: city });
+
     return res.status(200).json({
         EC: 0,
         data: user
     })
 }
 
+const deleteUserAPI = async (req, res) => {
+    let userId = req.body.userId;
+    let results = await User.deleteOne({ _id: userId });
+
+    return res.status(200).json({
+        EC: 0,
+        data: results
+    })
+}
+
 module.exports = {
     getUsersAPI,
     postCreateUserAPI,
-    putUpdateUserAPI
+    putUpdateUserAPI,
+    deleteUserAPI
 };
