@@ -1,5 +1,5 @@
 const connection = require('../config/database');
-const { getAllUsers, createUser, getUserById, updateUserById, deleteUserById } = require('../services/CRUDSevice');
+const { getAllUsers, createUser, getUserById, updateUserById, deleteUserById } = require('../services/CRUDService');
 const User = require('../models/user');
 
 const getHomepage = async (req, res) => {
