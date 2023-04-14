@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const { upLoadSingleFile } = require('../services/fileService');
+const { upLoadSingleFile, upLoadMultipleFiles } = require('../services/fileService');
 
 const getUsersAPI = async (req, res) => {
     let results = await User.find({});
@@ -56,12 +56,28 @@ const postUploadSingleFileAPI = async (req, res) => {
         res.status(400).send('No files were uploaded.');
         return;
     }
+    console.log(req.files.image);
+    const file = req.files.image;
 
-
-    const result = await upLoadSingleFile(req.files.image);
+    const result = await upLoadSingleFile(file);
     console.log(">>> result: ", result);
 
-    return res.send("ok file");
+    return res.send(result);
+}
+
+const postUploadMultipleFilesAPI = async (req, res) => {
+    if (!req.files || Object.keys(req.files).length === 0) {
+        res.status(400).send('No files were uploaded.');
+        return;
+    }
+    console.log(req.files.image);
+    const files = req.files.image;
+
+    const result = await upLoadMultipleFiles(files);
+    // console.log(">>> result: ", result);
+    //console.log(files);
+
+    return res.send(result);
 }
 
 module.exports = {
@@ -69,5 +85,6 @@ module.exports = {
     postCreateUserAPI,
     putUpdateUserAPI,
     deleteUserAPI,
-    postUploadSingleFileAPI
+    postUploadSingleFileAPI,
+    postUploadMultipleFilesAPI
 };

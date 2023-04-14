@@ -1,12 +1,13 @@
 const path = require('path');
 const upLoadSingleFile = async (fileObject) => {
-    uploadPath = path.join('./src', 'public') + '/images/' + fileObject.name;
-
+    //let uploadPath = path.join('./src', 'public') + '/images/upload/' + fileObject.name;
+    const parts = fileObject.name.split('.');
+    const uploadPath = path.resolve(__dirname, "../public/images/upload") + '\\' + parts[0] + `-${Date.now()}` + '.' + parts[1];
     try {
         await fileObject.mv(uploadPath);
         return {
             status: 'success',
-            path: 'link-image',
+            path: uploadPath,
             error: null
         };
     } catch (err) {
@@ -20,7 +21,26 @@ const upLoadSingleFile = async (fileObject) => {
 
 }
 
-const upLoadMultipleFiles = () => {
+const upLoadMultipleFiles = async (filesObject) => {
+    try {
+        const results = [];
+        for (const file of filesObject) {
+            const result = await upLoadSingleFile(file);
+            results.push(result);
+        }
+        return {
+            status: 'success',
+            result: results,
+            error: null
+        };
+    } catch (err) {
+        console.log(">>> check error: ", err);
+        return {
+            status: 'failed',
+            path: null,
+            error: JSON.stringify(err)
+        };
+    }
 
 }
 
