@@ -41,7 +41,6 @@ const upLoadMultipleFiles = async (filesObject) => {
             error: JSON.stringify(err)
         };
     }
-
 }
 
 module.exports = {

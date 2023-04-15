@@ -53,8 +53,7 @@ const deleteUserAPI = async (req, res) => {
 
 const postUploadSingleFileAPI = async (req, res) => {
     if (!req.files || Object.keys(req.files).length === 0) {
-        res.status(400).send('No files were uploaded.');
-        return;
+        return res.status(400).send('No files were uploaded.');
     }
     console.log(req.files.image);
     const file = req.files.image;
