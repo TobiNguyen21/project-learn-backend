@@ -34,7 +34,6 @@ const getCreatePage = (req, res) => {
     res.render('create.ejs')
 }
 
-
 const getUpdatePage = async (req, res) => {
     let userId = req.params.id;
     let user = await User.findById(userId).exec();

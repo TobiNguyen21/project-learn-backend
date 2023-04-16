@@ -1,5 +1,6 @@
 const { upLoadSingleFile, upLoadMultipleFiles } = require("../services/fileService");
 const Customer = require("../models/customer");
+const { createCustomerService } = require("../services/customerService");
 
 module.exports = {
     postCreateCustomerAPI: async (req, res) => {
@@ -15,7 +16,7 @@ module.exports = {
 
         console.log(">>> {obj}: ", { name, address, phone, email, resultUploadImage, description });
 
-        let customer = await Customer.create({
+        let customer = await createCustomerService({
             name: name,
             address: address,
             phone: phone,
