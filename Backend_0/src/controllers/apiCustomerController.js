@@ -1,5 +1,5 @@
 const { upLoadSingleFile, upLoadMultipleFiles } = require("../services/fileService");
-const { getAllCustomerService, createCustomerService, createArrayCustomerService } = require("../services/customerService");
+const { getAllCustomerService, createCustomerService, createArrayCustomerService, updateCustomerService } = require("../services/customerService");
 
 module.exports = {
     getAllCustomerAPI: async (req, res) => {
@@ -57,7 +57,22 @@ module.exports = {
                 data: customers
             })
         }
-    }
+    },
+    putUpdateCustomerAPI: async (req, res) => {
+        console.log(req.body);
+        let result = await updateCustomerService(req.body);
+        if (result.modifiedCount === 0) {
+            return res.status(200).json({
+                EC: -1,
+                result: "no update"
+            });
+        } else {
+            return res.status(200).json({
+                EC: 0,
+                result: result
+            });
+        }
+    },
 }
 
 
