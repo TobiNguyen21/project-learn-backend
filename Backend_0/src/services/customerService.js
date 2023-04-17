@@ -43,9 +43,29 @@ const updateCustomerService = async (customerUpdateData) => {
     }
 }
 
+const deleteACustomerService = async (idCustomerDelete) => {
+    try {
+        return await Customer.deleteById(idCustomerDelete);// using for soft-delete  -- static method
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
+const deleteArrayCustomerService = async (arrIds) => {
+    try {
+        return await Customer.delete({ _id: { $in: arrIds } });// using for soft-delete 
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
 module.exports = {
     getAllCustomerService,
     createCustomerService,
     createArrayCustomerService,
-    updateCustomerService
+    updateCustomerService,
+    deleteACustomerService,
+    deleteArrayCustomerService
 }

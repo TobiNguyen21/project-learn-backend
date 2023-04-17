@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoose_delete = require('mongoose-delete');
 
 const customerScheme = new mongoose.Schema({
     name: {
@@ -13,6 +14,9 @@ const customerScheme = new mongoose.Schema({
 },
     { timestamps: true }
 );
+
+// config to use soft-delete and override all method
+customerScheme.plugin(mongoose_delete, { overrideMethods: "all" });
 
 const Customer = mongoose.model('Customer', customerScheme);
 

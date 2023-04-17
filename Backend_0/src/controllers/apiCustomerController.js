@@ -1,5 +1,7 @@
 const { upLoadSingleFile, upLoadMultipleFiles } = require("../services/fileService");
-const { getAllCustomerService, createCustomerService, createArrayCustomerService, updateCustomerService } = require("../services/customerService");
+const { getAllCustomerService, createCustomerService,
+    createArrayCustomerService, updateCustomerService,
+    deleteACustomerService, deleteArrayCustomerService } = require("../services/customerService");
 
 module.exports = {
     getAllCustomerAPI: async (req, res) => {
@@ -73,6 +75,23 @@ module.exports = {
             });
         }
     },
+    deteteACustomerAPI: async (req, res) => {
+        let customerId = req.body.id;
+        let result = await deleteACustomerService(customerId);
+        return res.status(200).json({
+            EC: 0,
+            result: result
+        });
+    },
+    deleteArrayCustomerAPI: async (req, res) => {
+        let customerIds = req.body.customersId;
+        console.log(customerIds);
+        let result = await deleteArrayCustomerService(customerIds);
+        return res.status(200).json({
+            EC: 0,
+            result: result
+        });
+    }
 }
 
 
