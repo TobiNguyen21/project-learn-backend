@@ -3,14 +3,16 @@ const { getAllCustomerService, createCustomerService,
     createArrayCustomerService, updateCustomerService,
     deleteACustomerService, deleteArrayCustomerService } = require("../services/customerService");
 
+
 module.exports = {
     getAllCustomerAPI: async (req, res) => {
-        console.log(req.query);
+
         let limit = req.query.limit;
         let page = req.query.page;
+        let name = req.query.name;
         let customers = null;
         if (limit && page) {
-            customers = await getAllCustomerService(limit, page);
+            customers = await getAllCustomerService(limit, page, name, req.query);
         } else {
             customers = await getAllCustomerService();
         }
