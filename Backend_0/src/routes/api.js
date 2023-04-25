@@ -4,6 +4,7 @@ const { getUsersAPI, postCreateUserAPI, putUpdateUserAPI,
     deleteUserAPI, postUploadSingleFileAPI, postUploadMultipleFilesAPI } = require('../controllers/apiUserController');
 const { getAllCustomerAPI, postCreateCustomerAPI, postCreateArrayCustomerAPI,
     putUpdateCustomerAPI, deteteACustomerAPI, deleteArrayCustomerAPI } = require('../controllers/apiCustomerController');
+const { postCreateEmptyProjectAPI } = require('../controllers/apiProjectController');
 
 routerAPI.get('/users', getUsersAPI);
 routerAPI.post('/users', postCreateUserAPI);
@@ -19,6 +20,8 @@ routerAPI.post('/customers-many', postCreateArrayCustomerAPI);
 routerAPI.put('/customers', putUpdateCustomerAPI);
 routerAPI.delete('/customers', deteteACustomerAPI);
 routerAPI.delete('/customers-many', deleteArrayCustomerAPI);
+
+routerAPI.post('/projects', postCreateEmptyProjectAPI);
 
 routerAPI.get('/info', (req, res) => {
     return res.status(200).json({

@@ -30,24 +30,23 @@ app.use('/v1/api/', apiRoutes);
 (async () => {
     try {
         //using mogoose
-        // await connection();
+        await connection();
 
         //using mongodb driver
-        const url = process.env.DB_HOST_WITH_DRIVER;
-        const client = new MongoClient(url);
+        // const url = process.env.DB_HOST_WITH_DRIVER;
+        // const client = new MongoClient(url);
 
-        await client.connect();
-        console.log('Connected successfully to server');
+        // await client.connect();
+        // console.log('Connected successfully to server');
 
-        const dbName = process.env.DB_NAME;
-        const db = client.db(dbName);
-        const coll = db.collection('customers')
+        // const dbName = process.env.DB_NAME;
+        // const db = client.db(dbName);
+        // const coll = db.collection('customers')
 
-        // await coll.insertOne({ name: 'Jackie Robinson 2', address: 'Ho Chi Minh' });
+        // await coll.insertOne({ name: 'Jackie Robinson 2', address: [1,2] });
 
-        console.log(">> find = ", await coll.findOne({ address: "Ho Chi Minh" }));
+        // //console.log(">> find = ", await coll.findOne({ address: "Ho Chi Minh" }));
 
-        // Database Name
         app.listen(port, hostname, () => {
             // Log a message to the console indicating that the application is listening
             console.log(`Backend zero app listening on port ${port}`)

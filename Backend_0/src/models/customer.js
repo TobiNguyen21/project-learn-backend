@@ -1,23 +1,38 @@
 const mongoose = require('mongoose');
+
 const mongoose_delete = require('mongoose-delete');
 
-const customerScheme = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
+//shape data
+const customerSchema = new mongoose.Schema(
+    {
+        name: {
+            type: String,
+            required: true
+        },
+        address: String,
+        phone: String,
+        email: String,
+        image: String,
+        description: String,
     },
-    address: String,
-    phone: String,
-    email: String,
-    image: String,
-    description: String
-},
-    { timestamps: true }
+    {
+        timestamps: true, // createdAt, updatedAt
+        // statics: {
+        //     findByHoiDanIT(name) {
+        //         return this.find({ name: new RegExp(name, 'i') });
+        //     },
+
+        //     findByEric(name) {
+        //         return this.find({ name: new RegExp(name, 'i') });
+        //     },
+        // }
+
+    }
 );
 
-// config to use soft-delete and override all method
-customerScheme.plugin(mongoose_delete, { overrideMethods: "all" });
+// Override all methods
+customerSchema.plugin(mongoose_delete, { overrideMethods: 'all' });
 
-const Customer = mongoose.model('Customer', customerScheme);
+const Customer = mongoose.model('Customer', customerSchema);
 
 module.exports = Customer;
