@@ -1,13 +1,13 @@
 const Customer = require("../models/customer");
 const aqp = require('api-query-params');
 
-const getAllCustomerService = async (limit, page, name, queryString) => {
+const getAllCustomerService = async (limit1, page, name, queryString) => {
     try {
         let result = null;
-        if (limit && page) {
+        if (limit1 && page) {
             let offset = (page - 1) * limit;
 
-            const { filter } = aqp(queryString);
+            const { filter, limit } = aqp(queryString);
             delete filter.page;
             console.log(">>> check filter: ", filter);
 
