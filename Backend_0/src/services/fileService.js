@@ -18,7 +18,6 @@ const upLoadSingleFile = async (fileObject) => {
             error: JSON.stringify(err)
         };
     }
-
 }
 
 const upLoadMultipleFiles = async (filesObject) => {

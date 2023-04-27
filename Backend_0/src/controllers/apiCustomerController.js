@@ -2,6 +2,7 @@ const { upLoadSingleFile, upLoadMultipleFiles } = require("../services/fileServi
 const { getAllCustomerService, createCustomerService,
     createArrayCustomerService, updateCustomerService,
     deleteACustomerService, deleteArrayCustomerService } = require("../services/customerService");
+const Joi = require('joi');
 
 
 module.exports = {
@@ -32,29 +33,50 @@ module.exports = {
     postCreateCustomerAPI: async (req, res) => {
         let { name, address, phone, email, description } = req.body;
 
-        let resultUploadImage;
-        if (!req.files || Object.keys(req.files).length === 0) {
-            resultUploadImage = { path: "error upload file" };
-        } else {
-            let image = req.files.image;
-            resultUploadImage = await upLoadSingleFile(image);
+        const schema = Joi.object({
+            name: Joi.string()
+                .alphanum()
+                .min(3)
+                .max(30)
+                .required(),
+            address: Joi.string(),
+            phone: Joi.string().pattern(new RegExp('^[0,9]{8,11}$')),
+            email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+            description: Joi.string()
+        });
+
+        let { error } = schema.validate(req.body, { abortEarly: false });
+
+        if (error) {
+            return res.status(200).json({
+                msg: error
+            });
         }
+        else {
+            let resultUploadImage;
+            if (!req.files || Object.keys(req.files).length === 0) {
+                resultUploadImage = { path: "error upload file" };
+            } else {
+                let image = req.files.image;
+                resultUploadImage = await upLoadSingleFile(image);
+            }
 
-        console.log(">>> {obj}: ", { name, address, phone, email, resultUploadImage, description });
+            console.log(">>> {obj}: ", { name, address, phone, email, resultUploadImage, description });
 
-        let customer = await createCustomerService({
-            name: name,
-            address: address,
-            phone: phone,
-            email: email,
-            image: resultUploadImage.path,
-            description: description
-        })
+            let customer = await createCustomerService({
+                name: name,
+                address: address,
+                phone: phone,
+                email: email,
+                image: resultUploadImage.path,
+                description: description
+            })
 
-        return res.status(200).json({
-            EC: 0,
-            data: customer
-        })
+            return res.status(200).json({
+                EC: 0,
+                data: customer
+            })
+        }
     },
     postCreateArrayCustomerAPI: async (req, res) => {
         console.log(">>> check data: ", req.body.customers);

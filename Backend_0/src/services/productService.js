@@ -14,9 +14,25 @@ module.exports = {
             data.usersArr.forEach(element => {
                 myProject.usersInfor.push(element);
             });
-
             let newResult = await myProject.save();
+            return newResult;
+        }
+        else if (data.type === "REMOVE-USERS") {
+            let myProject = await Project.findById(data.projectId).exec();
 
+            data.usersArr.forEach(element => {
+                myProject.usersInfor.pull(element);
+            });
+            let newResult = await myProject.save();
+            return newResult;
+        }
+        else if (data.type === "ADD-TASK") {
+            let myProject = await Project.findById(data.projectId).exec();
+
+            data.tasksArr.forEach(element => {
+                myProject.tasks.push(element);
+            });
+            let newResult = await myProject.save();
             return newResult;
         }
         else return null;
@@ -29,6 +45,18 @@ module.exports = {
         let offset = (page - 1) * limit;
         let result = await Project.find(filter).populate(population).skip(offset).limit(limit).exec();
 
+        return result;
+    },
+    updateProject: async (data) => {
+        try {
+            return await Project.updateOne({ _id: data.id }, { name: data.name, startDate: data.startDate, endDate: data.endDate, description: data.description });
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
+    },
+    deleteProject: async (id) => {
+        let result = await Project.deleteById(id);
         return result;
     }
 }
