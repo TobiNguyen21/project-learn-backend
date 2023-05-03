@@ -1,0 +1,47 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update A User</title>
+    <!-- <link rel="stylesheet" href="css/styles.css"> -->
+    <link href="/css/styles.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <!-- <%=JSON.stringify(userEdit)%> -->
+    <div class="topnav">
+        <a href="/">Home</a>
+        <a href="/create">Create User</a>
+    </div>
+    <div class="form-add-users">
+        <form action="/update-user" method="post">
+            <fieldset>
+                <legend>Update users</legend>
+                <div class="input-group d-non">
+                    <label>ID: </label>
+                    <input type="text" name="userId" value="<%=userEdit.id %>" />
+                </div>
+                <div class="input-group">
+                    <label>Email: </label>
+                    <input type="text" name="email" value="<%= userEdit.email %>" />
+                </div>
+                <div class="input-group">
+                    <label>Name: </label>
+                    <input type="text" name="myName" value="<%= userEdit.name %>" />
+                </div>
+                <div class="input-group">
+                    <label>City: </label>
+                    <input type="text" name="city" value="<%= userEdit.city %>" />
+                </div>
+                <div>
+                    <button style="margin: 10px;cursor: pointer;"> Save</button>
+                </div>
+            </fieldset>
+        </form>
+
+    </div>
+</body>
+
+</html>
