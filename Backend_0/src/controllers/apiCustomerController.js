@@ -2,7 +2,7 @@ const { upLoadSingleFile, upLoadMultipleFiles } = require("../services/fileServi
 const { getAllCustomerService, createCustomerService,
     createArrayCustomerService, updateCustomerService,
     deleteACustomerService, deleteArrayCustomerService } = require("../services/customerService");
-const Joi = require('joi');
+const Joi = require('joi');// Using validate data
 
 
 module.exports = {
@@ -40,7 +40,7 @@ module.exports = {
                 .max(30)
                 .required(),
             address: Joi.string(),
-            phone: Joi.string().pattern(new RegExp('^[0,9]{8,11}$')),
+            phone: Joi.string().pattern(new RegExp('^(\\([0-9]{3}\\)\\s*|[0-9]{3}\\-?)?[0-9]{3}\\-?[0-9]{4}$')),
             email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
             description: Joi.string()
         });
